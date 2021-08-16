@@ -240,6 +240,12 @@ public:
         return it == user_network.end() ? nullptr : it->second;
     }
 
+    InspectionPolicy* get_user_inspection(unsigned user_id)
+    {
+        auto it = user_inspection.find(user_id);
+        return it == user_inspection.end() ? nullptr : it->second;
+    }
+
     InspectionPolicy* get_inspection_policy(unsigned i = 0)
     { return i < inspection_policy.size() ? inspection_policy[i] : nullptr; }
 
@@ -294,6 +300,12 @@ private:
 // navigator stuff
 //-------------------------------------------------------------------------
 
+void set_network_policy(const snort::SnortConfig*, unsigned = 0);
+
+void set_inspection_policy(const snort::SnortConfig*, unsigned = 0);
+
+void set_ips_policy(const snort::SnortConfig*, unsigned = 0);
+
 
 // FIXIT-L may be inlined at some point; on lockdown for now
 // FIXIT-L SO_PUBLIC required because SnortConfig::inline_mode(), etc. uses the function
@@ -306,17 +318,12 @@ SO_PUBLIC IpsPolicy* get_ips_policy(const snort::SnortConfig*, unsigned i = 0);
 SO_PUBLIC InspectionPolicy* get_default_inspection_policy(const snort::SnortConfig*);
 SO_PUBLIC void set_ips_policy(IpsPolicy*);
 SO_PUBLIC void set_network_policy(NetworkPolicy*);
+SO_PUBLIC void set_inspection_policy(InspectionPolicy*);
 SO_PUBLIC IpsPolicy* get_user_ips_policy(const snort::SnortConfig*, unsigned policy_id);
 SO_PUBLIC IpsPolicy* get_empty_ips_policy(const snort::SnortConfig*);
 SO_PUBLIC NetworkPolicy* get_user_network_policy(const snort::SnortConfig*, unsigned policy_id);
+SO_PUBLIC InspectionPolicy* get_user_inspection_policy(const snort::SnortConfig*, unsigned policy_id);
 }
-
-void set_network_policy(const snort::SnortConfig*, unsigned = 0);
-
-void set_inspection_policy(InspectionPolicy*);
-void set_inspection_policy(const snort::SnortConfig*, unsigned = 0);
-
-void set_ips_policy(const snort::SnortConfig*, unsigned = 0);
 
 void set_policies(const snort::SnortConfig*, Shell*);
 void set_default_policy(const snort::SnortConfig*);
