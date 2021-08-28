@@ -434,7 +434,7 @@ unsigned FlowControl::process(Flow* flow, Packet* p)
 
     // If this code is executed on a flow in SETUP state, it will result in a packet from both
     // client and server on packets from 0.0.0.0 or ::
-    if ( flow->flow_state != Flow::FlowState::SETUP )
+    if ( flow->flow_state != Flow::FlowState::SETUP and flow->flow_state != Flow::FlowState::ALLOW )
     {
         flow->set_direction(p);
         // This call can reset the flow state to SETUP in lazy flow timeout cases
